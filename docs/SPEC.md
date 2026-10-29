@@ -133,7 +133,9 @@ Tokens: `{business.name} {business.nameAlt} {business.phone} {business.address} 
 
 Blobs store `pipos`, keys `config`, `config-backup`, `jobs/<id>`, `pending/<id>` (empty marker). Job ids sort by time: `${Date.now().toString(36).padStart(9,'0')}-${rand4}`.
 
-Env: `ADMIN_PASSWORD` (required), `PRINTER_KEY` (required for the Pi endpoints), `SESSION_SECRET` (optional; defaults to sha256(`pipos:` + ADMIN_PASSWORD)).
+Env: `ADMIN_PASSWORD` (required; the Netlify deploy button prompts for it), `PRINTER_KEY` (optional; generated and stored in `meta/secrets` when unset), `SESSION_SECRET` (optional; defaults to sha256(`pipos:` + ADMIN_PASSWORD)), `PIPOS_REPO` (optional; the repo the Pi installer clones).
+
+Easy setup: the admin's setup wizard calls `POST /api/pi/pair` (admin) → `{ code, expiresAt }` (6 chars, 15 min) and shows `curl -fsSL '<origin>/api/pi/install?code=XXXXXX' | bash`. That route returns a bash wrapper that exports `PIPOS_API_BASE/PRINTER_KEY/NTFY_URL/NTFY_TOPIC/REPO` and runs `pi-bridge/install.sh` from the repo. The bridge posts `POST /api/printer/heartbeat` (printer key) on start, every 5 min and after jobs; `GET /api/printer` (admin) returns the key, the ntfy settings and the last heartbeat, which drives the "Waiting for the Pi… / Connected" status.
 
 Auth: HMAC-SHA256 tokens `base64url(JSON{role, exp}).base64url(sig)`, sent as `Authorization: Bearer <t>`. Roles: `admin` (30 days, admin panel) and `device` (1 year, a POS tablet connected with the admin password). The Pi sends `X-Printer-Key: <PRINTER_KEY>`. Compare secrets in constant time.
 

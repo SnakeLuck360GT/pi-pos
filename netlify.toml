@@ -14,3 +14,7 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# The "Deploy to Netlify" button asks for these.
+[template.environment]
+  ADMIN_PASSWORD = "Password for /admin. You'll also type it once on each tablet."
