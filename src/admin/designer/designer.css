@@ -1,0 +1,225 @@
+/* POS layout designer. Figma-style chrome: hairlines, 12-13px text, blue only
+   for selection. Kit controls are shrunk to 28px inside the designer. */
+
+.dz {
+  --ui-h: 28px;
+  --ui-h-sm: 24px;
+  --dz-left: 240px;
+  --dz-right: 300px;
+  --dz-canvas-bg: #f0f0f1;
+  display: grid;
+  grid-template-columns: var(--dz-left) minmax(0, 1fr) var(--dz-right);
+  grid-template-rows: 44px minmax(0, 1fr);
+  height: 100%;
+  min-height: 0;
+  background: var(--ui-surface);
+  font-size: var(--ui-fs);
+  color: var(--ui-text);
+}
+
+.dz-muted { color: var(--ui-muted); }
+.dz-sep { flex: none; width: 1px; height: 20px; background: var(--ui-border); margin: 0 4px; }
+.dz-empty { padding: 8px 12px 12px; font-size: var(--ui-fs-sm); color: var(--ui-muted); }
+
+/* Toolbar */
+.dz-toolbar {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--ui-border);
+  background: var(--ui-surface);
+  min-width: 0; overflow-x: auto; overflow-y: hidden;
+}
+.dz-toolbar > * { flex: none; }
+.dz-toolbar__seg--screen { width: 140px; }
+.dz-toolbar__seg--zoom { width: 108px; }
+.dz-toolbar__device { width: 228px; }
+.dz-toolbar__dims { display: flex; align-items: center; gap: 4px; }
+.dz-toolbar__dims .ui-input { width: 64px; }
+.dz-toolbar__num { display: flex; align-items: center; gap: 6px; font-size: var(--ui-fs-sm); color: var(--ui-text-2); }
+.dz-toolbar__num .ui-input { width: 52px; }
+
+/* Side panels */
+.dz-left, .dz-right {
+  min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+  background: var(--ui-surface);
+}
+.dz-left { border-right: 1px solid var(--ui-border); display: flex; flex-direction: column; }
+.dz-right { border-left: 1px solid var(--ui-border); }
+
+.dz-panel-head {
+  display: flex; align-items: center; height: 36px; padding: 0 12px; flex: none;
+  font-size: var(--ui-fs-sm); font-weight: 600; color: var(--ui-text);
+}
+.dz-panel-head--rule { border-top: 1px solid var(--ui-border); margin-top: 8px; }
+
+.dz-palette { display: flex; flex-direction: column; padding: 0 4px; }
+.dz-palette__row {
+  display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 8px;
+  border-radius: var(--ui-radius); color: var(--ui-text);
+  cursor: grab; user-select: none; -webkit-user-select: none;
+  /* The row owns the gesture on touch; the palette is short enough not to need scrolling. */
+  touch-action: none;
+}
+.dz-palette__row .ui-icon { color: var(--ui-text-2); }
+.dz-palette__row:hover { background: var(--ui-hover); }
+.dz-palette__row:active { cursor: grabbing; }
+.dz-palette__row:focus-visible { outline: 2px solid var(--ui-focus); outline-offset: -2px; }
+
+.dz-chip {
+  position: fixed; z-index: 1000; pointer-events: none;
+  display: flex; align-items: center; gap: 6px; height: 26px; padding: 0 8px;
+  transform: translate(8px, 8px);
+  font-size: var(--ui-fs-sm); font-weight: 500;
+  background: var(--ui-surface); border: 1px solid var(--ui-border); border-radius: var(--ui-radius);
+  box-shadow: var(--ui-shadow-pop);
+}
+
+.dz-layers { display: flex; flex-direction: column; padding: 0 4px 12px; }
+.dz-layer {
+  display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 2px 0 8px;
+  border-radius: var(--ui-radius); cursor: default; user-select: none; min-width: 0;
+}
+.dz-layer > .ui-icon { color: var(--ui-text-2); }
+.dz-layer:hover { background: var(--ui-hover); }
+.dz-layer.is-selected { background: var(--ui-select-bg); }
+.dz-layer.is-selected > .ui-icon { color: var(--ui-select); }
+.dz-layer.is-hidden .dz-layer__name, .dz-layer.is-hidden > .ui-icon { opacity: .45; }
+.dz-layer__name { flex: none; white-space: nowrap; }
+.dz-layer__detail { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ui-muted); font-size: var(--ui-fs-sm); }
+.dz-layer__eye { margin-left: auto; color: var(--ui-muted); }
+
+/* Inspector */
+.dz-insp-head {
+  position: sticky; top: 0; z-index: 1;
+  display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 8px 0 12px;
+  background: var(--ui-surface); border-bottom: 1px solid var(--ui-border);
+}
+.dz-insp-head > .ui-icon { color: var(--ui-text-2); }
+.dz-insp-head__title { flex: 1; min-width: 0; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.dz-group { padding: 12px; border-bottom: 1px solid var(--ui-border); }
+.dz-group__title { font-size: var(--ui-fs-sm); font-weight: 600; margin-bottom: 10px; }
+.dz-group__body { display: flex; flex-direction: column; gap: 8px; }
+
+/* Label-left rows keep the inspector compact. */
+.dz-props .ui-field:not(.ui-field--inline) {
+  display: grid; grid-template-columns: 96px minmax(0, 1fr); align-items: center; column-gap: 8px; row-gap: 4px;
+}
+.dz-props .ui-field:not(.ui-field--inline) .ui-field__label { font-weight: 400; }
+.dz-props .ui-field__hint { grid-column: 2; }
+.dz-props .ui-field:has(.ui-textarea), .dz-props .ui-field:has(.ui-image) { align-items: start; }
+.dz-props .ui-field:has(.ui-textarea) .ui-field__label { padding-top: 6px; }
+.dz-props .ui-field--inline { min-height: 28px; }
+
+.dz-pos-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.dz-pos-field { position: relative; display: block; }
+.dz-pos-field > span {
+  position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
+  font-size: 11px; color: var(--ui-muted); pointer-events: none;
+}
+.dz-pos-field .ui-input { padding-left: 20px; padding-right: 4px; }
+
+.dz-presets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.dz-preset {
+  display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 8px 0 4px;
+  border: 1px solid var(--ui-border); border-radius: var(--ui-radius); background: var(--ui-surface);
+  font-size: var(--ui-fs-sm); color: var(--ui-text); cursor: pointer; text-align: left;
+}
+.dz-preset:hover { border-color: var(--ui-border-strong); }
+.dz-preset.is-on { border-color: var(--ui-select); box-shadow: 0 0 0 1px var(--ui-select); }
+.dz-preset:focus-visible { outline: 2px solid var(--ui-focus); outline-offset: 1px; }
+.dz-preset__swatch {
+  display: flex; align-items: center; justify-content: center; gap: 2px; flex: none;
+  width: 34px; height: 22px; border-radius: 4px; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .08);
+}
+.dz-preset__swatch > span { width: 10px; height: 12px; border-radius: 2px; }
+.dz-preset__swatch > span:first-child { border: 1px solid; }
+
+/* Canvas */
+.dz-canvas {
+  position: relative; min-width: 0; min-height: 0;
+  background: var(--dz-canvas-bg); overflow: hidden;
+}
+.dz-canvas.is-scroll { overflow: auto; }
+.dz-canvas__inner { display: flex; min-width: 100%; min-height: 100%; width: max-content; padding: 40px; }
+.dz-stage { position: relative; flex: none; margin: auto; }
+
+.dz-device {
+  position: absolute; inset: 0; overflow: hidden;
+  border-radius: 12px; background: var(--ui-surface);
+}
+.dz-device::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  border: 1px solid var(--ui-border-strong); border-radius: inherit;
+}
+.dz-device__screen { transform-origin: 0 0; pointer-events: none; }
+
+/* Real POS markup, sized to the device instead of the viewport. The base
+   look is repeated here so the canvas is right even before pos.css loads. */
+.dz-pos.pos-root {
+  position: relative; inset: auto; min-height: 0; max-height: none; overflow: hidden;
+  background: var(--pos-bg); color: var(--pos-text); font-family: var(--pos-font); font-size: var(--pos-fs);
+}
+.dz-pos .dz-pos__grid {
+  display: grid; width: 100%; height: 100%;
+  gap: var(--pos-gap); padding: var(--pos-pad); box-sizing: border-box;
+}
+
+.dz-block-error {
+  display: grid; place-items: center; height: 100%; padding: 8px;
+  font: 12px var(--ui-font); color: var(--ui-muted); text-align: center;
+  border: 1px dashed var(--ui-border-strong); border-radius: 4px;
+}
+
+/* Interaction layer over the screen */
+.dz-overlay {
+  position: absolute; inset: 0;
+  touch-action: none; user-select: none; -webkit-user-select: none;
+}
+.dz-hit { position: absolute; cursor: default; }
+.dz-hit:hover { box-shadow: inset 0 0 0 1px var(--ui-select); }
+.dz-hit.is-selected { cursor: move; }
+.dz-hit.is-active { z-index: 2; cursor: move; }
+.dz-overlay.is-dragging .dz-hit:not(.is-active):hover { box-shadow: none; }
+
+.dz-grid { position: absolute; inset: 0; pointer-events: none; }
+.dz-cell { position: absolute; box-shadow: inset 0 0 0 1px rgba(37, 99, 235, .16); border-radius: 2px; }
+
+.dz-ghost {
+  position: absolute; z-index: 3; pointer-events: none;
+  background: rgba(37, 99, 235, .08); box-shadow: inset 0 0 0 1px rgba(37, 99, 235, .5); border-radius: 2px;
+}
+.dz-ghost.is-invalid { background: rgba(220, 38, 38, .08); box-shadow: inset 0 0 0 1px var(--ui-danger); }
+
+.dz-sel {
+  position: absolute; z-index: 4; pointer-events: none;
+  box-shadow: inset 0 0 0 1.5px var(--ui-select);
+}
+.dz-sel.is-hidden { box-shadow: none; outline: 1.5px dashed var(--ui-select); outline-offset: -1.5px; }
+.dz-sel__tab {
+  position: absolute; left: 0; bottom: 100%; margin-bottom: 2px;
+  display: flex; align-items: center; gap: 6px; height: 18px; padding: 0 6px;
+  font: 500 11px/1 var(--ui-font); color: #fff; white-space: nowrap;
+  background: var(--ui-select); border-radius: 3px;
+}
+.dz-sel__tab.is-inside { bottom: auto; top: 3px; left: 3px; margin: 0; }
+.dz-sel__size { font-variant-numeric: tabular-nums; opacity: .8; }
+
+.dz-handle {
+  position: absolute; width: 8px; height: 8px; margin: -4px 0 0 -4px;
+  background: #fff; border: 1px solid var(--ui-select); border-radius: 1px;
+  pointer-events: auto; touch-action: none;
+}
+/* Bigger invisible hit area for fingers. */
+.dz-handle::before { content: ''; position: absolute; inset: -8px; }
+.dz-handle--nw { left: 0;    top: 0;    cursor: nwse-resize; }
+.dz-handle--n  { left: 50%;  top: 0;    cursor: ns-resize; }
+.dz-handle--ne { left: 100%; top: 0;    cursor: nesw-resize; }
+.dz-handle--e  { left: 100%; top: 50%;  cursor: ew-resize; }
+.dz-handle--se { left: 100%; top: 100%; cursor: nwse-resize; }
+.dz-handle--s  { left: 50%;  top: 100%; cursor: ns-resize; }
+.dz-handle--sw { left: 0;    top: 100%; cursor: nesw-resize; }
+.dz-handle--w  { left: 0;    top: 50%;  cursor: ew-resize; }
+
+.dz-toolbar__undo { display: flex; align-items: center; gap: 2px; }
