@@ -1,0 +1,55 @@
+/* Setup wizard and the Pi connection panel. Classes prefixed su- and pi-. */
+
+.su { min-height: 100dvh; background: var(--ui-bg); }
+.su-top { display: flex; align-items: center; justify-content: space-between; height: 52px; padding: 0 16px 0 24px; border-bottom: 1px solid var(--ui-border); }
+.su-top__app { font-weight: 600; }
+.su-body { max-width: 520px; margin: 0 auto; padding: 56px 16px 64px; }
+
+.su-progress { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+.su-progress__text { font-size: var(--ui-fs-sm); color: var(--ui-muted); }
+.su-progress__bars { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+.su-progress__bars span { height: 2px; border-radius: 1px; background: var(--ui-border); }
+.su-progress__bars span.is-on { background: var(--ui-accent); }
+
+.su-title { font-size: 20px; font-weight: 600; letter-spacing: -0.01em; }
+.su-desc { margin-top: 4px; color: var(--ui-text-2); }
+.su-content { margin-top: 24px; }
+.su-foot { display: flex; align-items: center; gap: 8px; margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--ui-border); }
+.su-error { margin-top: 12px; font-size: var(--ui-fs-sm); color: var(--ui-danger); }
+
+.su-list { border: 1px solid var(--ui-border); border-radius: var(--ui-radius-lg); background: var(--ui-surface); }
+.su-mode { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; padding: 8px 16px; border-top: 1px solid var(--ui-border); }
+.su-mode:first-child { border-top: 0; }
+.su-mode__eta { display: flex; align-items: center; gap: 8px; font-size: var(--ui-fs-sm); }
+.su-num { width: 64px; }
+.su-pad { padding: 12px 16px; border-top: 1px solid var(--ui-border); }
+
+.su-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.su-card {
+  display: flex; flex-direction: column; gap: 6px; padding: 16px; text-align: left;
+  border: 1px solid var(--ui-border); border-radius: var(--ui-radius-lg); background: var(--ui-surface);
+  cursor: pointer; transition: border-color var(--ui-ease);
+}
+.su-card:hover { border-color: var(--ui-border-strong); }
+.su-card.is-on { border-color: var(--ui-accent); }
+.su-card:focus-visible { outline: 2px solid var(--ui-focus); outline-offset: 2px; }
+.su-card__title { display: flex; align-items: center; justify-content: space-between; font-size: var(--ui-fs-lg); font-weight: 600; }
+.su-card__desc { font-size: var(--ui-fs-sm); color: var(--ui-text-2); line-height: 1.45; }
+
+.su-url { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 12px 12px 16px; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-lg); background: var(--ui-surface); }
+.su-url__text { font: 500 var(--ui-fs-lg) var(--ui-mono); overflow-wrap: anywhere; }
+
+/* ── Pi connection ───────────────────────────────────────────────────── */
+.pi-connect { display: flex; flex-direction: column; gap: 12px; }
+.pi-connect a { color: var(--ui-text); text-underline-offset: 2px; }
+.pi-connect__row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; min-height: var(--ui-h-sm); }
+.pi-status { display: flex; align-items: center; gap: 8px; color: var(--ui-text-2); }
+.pi-status.is-error { color: var(--ui-danger); }
+.pi-status__ok { color: var(--ui-success); }
+.pi-status__warn { color: var(--ui-warn); }
+
+@media (max-width: 560px) {
+  .su-body { padding-top: 32px; }
+  .su-cards { grid-template-columns: 1fr; }
+  .su-mode { flex-wrap: wrap; }
+}
