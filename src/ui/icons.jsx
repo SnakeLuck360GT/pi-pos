@@ -35,6 +35,8 @@ const P = {
   search:   'M7 12a5 5 0 100-10 5 5 0 000 10zM14 14l-3.5-3.5',
   move:     'M8 1.5v13M1.5 8h13M8 1.5L6 3.5M8 1.5l2 2M8 14.5l-2-2M8 14.5l2-2M1.5 8l2-2M1.5 8l2 2M14.5 8l-2-2M14.5 8l-2 2',
   phone:    'M4.5 1.5h7v13h-7zM7.5 12.5h1',
+  upload:   'M8 10.5V2.5M5 5.5l3-3 3 3M2.5 10v3.5h11V10',
+  file:     'M4 1.5h5l3 3v10H4zM9 1.5v3h3',
 }
 
 export function Icon({ name, size = 16, className = '', ...rest }) {
