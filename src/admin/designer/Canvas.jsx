@@ -41,7 +41,7 @@ const PosScreen = memo(function PosScreen({ theme, layout, ctx, blocks, width, h
   // Keeps inputs inside blocks (search) out of the tab order.
   useEffect(() => { ref.current?.setAttribute('inert', '') }, [])
   return (
-    <div ref={ref} className="pos-root dz-pos" style={{ ...themeVars(theme), width, height }}>
+    <div ref={ref} className="pos-root pos-theme dz-pos" style={{ ...themeVars(theme), width, height }}>
       <div
         className="pos-grid dz-pos__grid"
         style={{
