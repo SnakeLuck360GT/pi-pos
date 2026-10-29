@@ -37,6 +37,7 @@ const P = {
   phone:    'M4.5 1.5h7v13h-7zM7.5 12.5h1',
   upload:   'M8 10.5V2.5M5 5.5l3-3 3 3M2.5 10v3.5h11V10',
   file:     'M4 1.5h5l3 3v10H4zM9 1.5v3h3',
+  backspace:'M5.5 3.5h8v9h-8L2 8zM8 6l3 3M11 6l-3 3',
 }
 
 export function Icon({ name, size = 16, className = '', ...rest }) {
