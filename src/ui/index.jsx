@@ -1,7 +1,7 @@
 // Admin UI kit. Every admin screen is built from these, so the panel keeps one
 // look: neutral greys, hairline borders, 13px text, no shadows except overlays.
 // Styles live in ./ui.css (classes prefixed `ui-`).
-import { useEffect, useId, useRef } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { Icon } from './icons.jsx'
 import { getPath, setPath } from '../lib/fields.js'
 
@@ -47,12 +47,25 @@ export function NumberInput({ value, onChange, min, max, step = 1, placeholder, 
   )
 }
 
-// Money: shows 2dp, stores a number.
-export function MoneyInput({ value, onChange, currency = '£', ...rest }) {
+// Money: shows 2dp when not being edited, stores a number.
+export function MoneyInput({ value, onChange, currency = '£', className, ...rest }) {
+  const [draft, setDraft] = useState(null)
+  const shown = draft ?? (value == null || value === '' ? '' : Number(value).toFixed(2))
   return (
     <div className="ui-affix">
       <span className="ui-affix__pre">{currency}</span>
-      <NumberInput value={value} onChange={v => onChange(v ?? 0)} step={0.01} {...rest} />
+      <input
+        type="text" inputMode="decimal" className={cx('ui-input', 'ui-input--num', className)}
+        value={shown}
+        onFocus={e => { setDraft(shown); e.target.select() }}
+        onChange={e => {
+          setDraft(e.target.value)
+          const n = parseFloat(e.target.value.replace(',', '.'))
+          onChange(Number.isFinite(n) ? n : 0)
+        }}
+        onBlur={() => setDraft(null)}
+        {...rest}
+      />
     </div>
   )
 }
