@@ -1,0 +1,18 @@
+# Copy to /etc/systemd/system/pipos-bridge.service. install.sh writes this for
+# you with the right user and paths; change User and the paths if doing it by hand.
+[Unit]
+Description=PiPOS printer bridge
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/pi-pos/pi-bridge
+EnvironmentFile=/home/pi/pi-pos/pi-bridge/.env
+ExecStart=/usr/bin/node /home/pi/pi-pos/pi-bridge/index.js
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
