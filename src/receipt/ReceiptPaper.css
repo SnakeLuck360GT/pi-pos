@@ -1,0 +1,42 @@
+/* Receipt preview. Plain white paper with a hairline edge. Used in the admin
+   and on the POS, so it falls back to fixed colours when the --ui-* tokens
+   aren't there. */
+
+.rp-paper {
+  flex: none;
+  background: #fff;
+  color: #111;
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-radius: 2px;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, "PingFang SC", "Noto Sans Mono CJK SC", "Noto Sans SC", monospace;
+  user-select: none;
+}
+
+.rp-block { position: relative; }
+.rp-paper.is-pickable .rp-block { cursor: pointer; }
+.rp-paper.is-pickable .rp-block:hover { outline: 1px solid rgba(0, 0, 0, .14); }
+.rp-block.is-selected,
+.rp-paper.is-pickable .rp-block.is-selected:hover {
+  outline: 1px solid var(--ui-select, #2563eb);
+  background: var(--ui-select-bg, rgba(37, 99, 235, .06));
+}
+
+.rp-line { position: relative; }
+.rp-run {
+  position: absolute; top: 0;
+  display: flex; white-space: pre;
+  transform-origin: 0 0;
+}
+.rp-run > span { flex: none; display: block; text-align: center; overflow: visible; }
+.rp-run.is-bold { font-weight: 700; }
+.rp-run.is-invert { background: #111; color: #fff; }
+.rp-run.is-under::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 1px;
+  height: 1px; background: currentColor;
+}
+
+.rp-rule > div { background: #111; }
+
+.rp-image, .rp-qr { position: relative; }
+.rp-image img { position: absolute; top: 0; image-rendering: pixelated; }
+.rp-qr svg { position: absolute; top: 0; fill: #111; }
