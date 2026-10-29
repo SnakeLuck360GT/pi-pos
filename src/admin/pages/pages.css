@@ -120,3 +120,5 @@
   .pg-col-applies, .pg-col-eta, .pg-col-copies { display: none; }
   .pg-checks { grid-template-columns: 1fr; }
 }
+
+.pg-notice { margin: -8px 0 16px; padding: 8px 12px; font-size: var(--ui-fs-sm); color: var(--ui-text-2); background: var(--ui-subtle); border-radius: var(--ui-radius); }

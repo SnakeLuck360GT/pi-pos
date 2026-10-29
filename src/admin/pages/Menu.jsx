@@ -7,6 +7,7 @@ import { newId } from '../../../shared/defaults.js'
 import { money } from '../../../shared/order.js'
 import { SortableList, moveItem, moveWithin } from './Sortable.jsx'
 import { Confirm, nameOf } from './util.jsx'
+import MenuImport from '../import/MenuImport.jsx'
 
 // Items whose category was removed some other way still need a home.
 const NONE = '__none'
@@ -27,6 +28,8 @@ export default function Menu({ config, update }) {
   const [picked, setPicked] = useState(() => categories[0]?.id ?? null)
   const [editing, setEditing] = useState(null)
   const [confirm, setConfirm] = useState(null)
+  const [importing, setImporting] = useState(false)
+  const [notice, setNotice] = useState('')
 
   const known = new Set(categories.map(c => c.id))
   const orphans = items.filter(i => !known.has(i.categoryId))
@@ -62,7 +65,18 @@ export default function Menu({ config, update }) {
 
   return (
     <>
-      <PageHeader title="Menu" description="Categories and items, in the order the POS shows them." />
+      <PageHeader
+        title="Menu" description="Categories and items, in the order the POS shows them."
+        actions={<Button icon="upload" onClick={() => setImporting(true)}>Import</Button>}
+      />
+      {notice && <p className="pg-notice">{notice}</p>}
+      {importing && (
+        <MenuImport
+          config={config} update={update}
+          onClose={() => setImporting(false)}
+          onImported={s => setNotice(`${s.message} ${s.added} item${s.added === 1 ? '' : 's'} added.`)}
+        />
+      )}
 
       <div className="pg-menu">
         <Section
