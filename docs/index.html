@@ -20,7 +20,7 @@
   .wrap { display: grid; grid-template-columns: 200px minmax(0, 680px); gap: 64px; max-width: 1000px; margin: 0 auto; padding: 56px 24px 120px; }
   nav { position: sticky; top: 56px; align-self: start; font-size: 13px; }
   nav .name { display: block; font-weight: 600; font-size: 14px; margin-bottom: 20px; text-decoration: none; }
-  nav ul { list-style: none; }
+  nav ul { list-style: none; padding: 0; }
   nav li { margin: 0 0 6px; }
   nav a { color: var(--muted); text-decoration: none; }
   nav a:hover { color: var(--text); }
@@ -45,6 +45,10 @@
   td:first-child { white-space: nowrap; }
   .muted { color: var(--muted); }
   .diagram { font: 13px/1.7 var(--mono); color: var(--muted); }
+  figure { margin: 4px 0 20px; }
+  figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; }
+  figcaption { margin-top: 8px; font-size: 13px; color: var(--muted); }
+  .steps figure { margin-top: 12px; }
   .steps { list-style: none; padding: 0; counter-reset: s; }
   .steps li { position: relative; padding: 0 0 4px 36px; margin-bottom: 18px; }
   .steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 0; top: 1px; width: 22px; height: 22px; border: 1px solid var(--line); border-radius: 50%; font-size: 12px; display: grid; place-items: center; color: var(--muted); }
@@ -65,9 +69,12 @@
   .pre:hover .copy, .copy:focus { opacity: 1; }
   @media (hover: none) { .copy { opacity: 1; } }
   @media (max-width: 820px) {
-    .wrap { grid-template-columns: 1fr; gap: 32px; padding-top: 32px; }
+    .wrap { grid-template-columns: minmax(0, 1fr); gap: 32px; padding: 32px 16px 96px; }
+    table { display: block; overflow-x: auto; }
+    td:first-child { white-space: normal; min-width: 110px; }
     nav { position: static; }
-    nav ul { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+    nav ul { display: flex; flex-wrap: wrap; gap: 4px 16px; padding: 0; }
+    .diagram { font-size: 11px; padding: 12px; }
     nav .sub { display: none; }
   }
 </style>
@@ -81,6 +88,7 @@
     <li><a href="#start">Getting started</a></li>
     <li><a href="#admin">Admin</a>
       <ul class="sub">
+        <li><a href="#import">Importing a menu</a></li>
         <li><a href="#layout">POS layout</a></li>
         <li><a href="#receipt">Receipt</a></li>
       </ul>
@@ -99,6 +107,7 @@
   <h1>PiPOS</h1>
   <p class="lead">A point of sale for small shops and takeaways. Take orders on a tablet, print receipts on a thermal printer. Free and open source.</p>
   <p>Everything is set up from the admin panel in the browser: the menu, the layout of the tablet screens, and what the receipt looks like. You drag blocks around, change text sizes and colours, and the tablets pick up the changes within a minute.</p>
+  <figure><img src="img/pos.png" alt="POS order screen with categories, item grid and the order ticket" loading="lazy"><figcaption>The order screen on an iPad. Every block on it can be moved, resized and restyled.</figcaption></figure>
   <pre class="diagram">tablet  →  your Netlify site  →  Raspberry Pi  →  printer
               ↑
            /admin</pre>
@@ -117,10 +126,12 @@
     <li>
       <label><input type="checkbox" data-step="admin"> <strong>Open the admin</strong></label>
       <p>Go to <code>your-site.netlify.app/admin</code> and log in. A short setup walks you through your shop name, how you take orders and your paper size. There's a sample menu to start from.</p>
+  <figure><img src="img/setup-shop.png" alt="First step of the setup: shop name and second language" loading="lazy"></figure>
     </li>
     <li>
       <label><input type="checkbox" data-step="pi"> <strong>Connect the printer</strong></label>
       <p>The setup gives you one command. Paste it on the Raspberry Pi and it installs everything and prints a test page. The admin shows <em>Connected</em> when it's done. New to the Pi? <a href="#raspberry-pi">Start here</a>.</p>
+  <figure><img src="img/setup-printer.png" alt="Setup step showing the install command and a connected printer" loading="lazy"></figure>
     </li>
   </ol>
   <p>Then open your site on the tablet and enter the admin password once. On iPad, use <em>Share → Add to Home Screen</em> so it opens full screen.</p>
@@ -129,6 +140,8 @@
 
 <section id="admin">
   <h2>Admin</h2>
+  <p>The Overview page keeps a checklist of what's left to set up. Each page also has a short walkthrough the first time you open it; <em>Show tips again</em> at the bottom of the sidebar replays them.</p>
+  <figure><img src="img/overview.png" alt="Admin overview with the getting started checklist" loading="lazy"></figure>
   <table>
     <tr><td>Business</td><td>Name, second-language name, phone, currency. Turn features on or off: order types, modifiers, second-language names, print queue, daily summary.</td></tr>
     <tr><td>Menu</td><td>Categories and items. Drag to reorder. Items can have choices (pick one before adding, like Chicken / Beef / Prawn) with their own price.</td></tr>
@@ -140,6 +153,10 @@
     <tr><td>Printer</td><td>Paper width, encoding, test print, and the settings to copy onto the Pi.</td></tr>
   </table>
 
+  <h3 id="import">Importing a menu</h3>
+  <p>On the Menu page, <em>Import</em> reads a PDF menu and pulls out the categories, names and prices. If your menu is a scan or a photo, paste its text instead. You get to check everything before it's added, and untick anything it got wrong. It all happens in your browser, nothing is uploaded.</p>
+  <figure><img src="img/import.png" alt="Import review with categories, names, second names and prices" loading="lazy"></figure>
+
   <h3 id="layout">POS layout</h3>
   <p>The tablet has two screens, Home and Order. Each one is a grid (12 columns by default) and everything on it is a block: the item grid, the order ticket, category tabs, the print button, text, a clock, an image.</p>
   <ul>
@@ -149,10 +166,12 @@
     <li>Click empty space to edit the theme: colours, font, base text size, spacing.</li>
     <li>Pick a device size at the top to see how it looks on your tablet.</li>
   </ul>
+  <figure><img src="img/layout.png" alt="POS layout designer with the item grid selected" loading="lazy"></figure>
   <p>Keyboard: arrows move, shift + arrows resize, <code>⌘D</code> duplicates, delete removes, <code>⌘Z</code> undoes.</p>
 
   <h3 id="receipt">Receipt</h3>
   <p>A receipt is a list of blocks printed top to bottom. Drag to reorder, click one to edit it, and the preview updates as you go. Click a line in the preview to jump to the block it came from.</p>
+  <figure><img src="img/receipt.png" alt="Receipt designer with the block list and a live preview" loading="lazy"></figure>
   <p>Every line has its own size (1× to 8× width and height), bold, underline, white on black, and alignment. The default template prints the order type and ready time big at the top, the customer details, then each item with its second-language name large and the English name and price underneath.</p>
   <p>Receipts are laid out in the browser when the order is placed, so changing the template never needs anything updated on the Pi.</p>
 </section>
