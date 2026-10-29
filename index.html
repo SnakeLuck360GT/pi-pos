@@ -10,5 +10,7 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-  </body>
-</html>
+<!-- The closing body and html tags are left out on purpose (both are
+     optional in HTML). Netlify injects its floating toolbar just before the
+     closing body tag, so without one the toolbar stays off the POS and admin.
+     Netlify's snippet injection needs that tag too, so add it back if you use it. -->

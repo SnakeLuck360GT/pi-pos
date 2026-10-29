@@ -273,6 +273,7 @@ cd ~/pi-pos/pi-bridge && node index.js --test   # test page</code></pre>
     <tr><td>Chinese prints as boxes</td><td>Set encoding to GB2312 in Admin → Printer, or <code>ENCODING=gb2312</code> on the Pi.</td></tr>
     <tr><td>Text wraps oddly</td><td>Set the right paper width in Admin → Printer (80mm = 48 columns, 58mm = 32).</td></tr>
     <tr><td>Tablet says it's not connected</td><td>The admin password or <code>SESSION_SECRET</code> changed. Enter the password again.</td></tr>
+    <tr><td>A Netlify bar shows at the bottom</td><td>PiPOS keeps Netlify's review toolbar off by default. If a bar still appears, your Netlify project is probably still private: make it public (the tablets need that anyway). To turn the review toolbar off completely, go to Project configuration → Developer settings → Collaboration tools → Configure.</td></tr>
     <tr><td>Pi keeps rebooting</td><td>The power supply is too weak. Use a proper 2.5A one.</td></tr>
   </table>
 </section>
