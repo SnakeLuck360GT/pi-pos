@@ -9,7 +9,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node --test shared/*.test.js"
+    "test": "node --test shared/*.test.js src/lib/*.test.js"
   },
   "dependencies": {
     "@netlify/blobs": "8.1.0",
