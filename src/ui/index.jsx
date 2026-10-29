@@ -236,3 +236,5 @@ export function Badge({ tone = 'neutral', children }) {
 export function Spinner() {
   return <span className="ui-spinner" aria-label="Loading" />
 }
+
+export { Tour, resetTours, tourSeen } from './Tour.jsx'

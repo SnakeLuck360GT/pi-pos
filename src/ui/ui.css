@@ -176,3 +176,22 @@
 @keyframes ui-spin { to { transform: rotate(360deg) } }
 
 .ui-kbd { font: 500 11px var(--ui-mono); padding: 1px 5px; border: 1px solid var(--ui-border); border-bottom-width: 2px; border-radius: 4px; color: var(--ui-text-2); }
+
+/* ── Tour ────────────────────────────────────────────────────────────── */
+.ui-tour { position: fixed; inset: 0; z-index: 2000; }
+.ui-tour__dim { position: absolute; inset: 0; background: rgba(9, 9, 11, .4); animation: ui-fade 150ms ease; }
+.ui-tour__ring {
+  position: absolute; border-radius: var(--ui-radius-lg); pointer-events: none;
+  box-shadow: 0 0 0 1.5px var(--ui-select), 0 0 0 9999px rgba(9, 9, 11, .4);
+  transition: top 180ms ease, left 180ms ease, width 180ms ease, height 180ms ease;
+}
+.ui-tour__card {
+  position: absolute; width: 300px; padding: 14px 16px 12px;
+  background: var(--ui-surface); border: 1px solid var(--ui-border); border-radius: var(--ui-radius-lg);
+  box-shadow: var(--ui-shadow-pop); animation: ui-pop 140ms cubic-bezier(.2,.6,.2,1);
+}
+.ui-tour__card.is-center { top: 50%; left: 50%; transform: translate(-50%, -50%); animation: ui-fade 150ms ease; }
+.ui-tour__count { font-size: 11px; color: var(--ui-muted); margin-bottom: 4px; font-variant-numeric: tabular-nums; }
+.ui-tour__title { font-weight: 600; margin-bottom: 4px; }
+.ui-tour__body { color: var(--ui-text-2); line-height: 1.5; }
+.ui-tour__foot { display: flex; align-items: center; gap: 6px; margin-top: 14px; }
