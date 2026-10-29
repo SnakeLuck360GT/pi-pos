@@ -1,0 +1,20 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root { height: 100%; }
+
+body {
+  font: var(--ui-fs)/1.5 var(--ui-font);
+  color: var(--ui-text);
+  background: var(--ui-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  text-rendering: optimizeLegibility;
+}
+
+button, input, select, textarea { font: inherit; color: inherit; }
+img, svg { display: block; }
+h1, h2, h3, h4 { font-weight: 600; }
+a { color: inherit; }
+
+::selection { background: rgba(37, 99, 235, .16); }
